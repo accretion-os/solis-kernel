@@ -1,0 +1,32 @@
+# Contributing
+This needs extension.
+
+## Documentation Template
+```
+/// <description>
+///
+/// <note>
+///
+/// # Parameters
+/// | Parameter | Description |
+/// | :-------: | :---------: |
+/// |  | |  |
+/// ...
+///
+/// # Returns
+/// <returns>. (`<type>`)
+///
+/// # Safety
+/// This function exhibits the following behaviors that can be considered/is unsafe:
+/// - Behavior.
+/// - ...
+///
+/// To ensure safety, check the following:
+/// - Check
+/// - ...
+///
+/// ## Possible faults
+/// **This list is (likely) non-exhaustive. Always exercise caution with unsafe code.**
+/// - *Fault*: effect.
+/// - ...
+```

@@ -1,0 +1,8 @@
+[package]
+name = "solis"
+description = "The Accretion kernel"
+authors = ["Accretion development team"]
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
