@@ -61,7 +61,7 @@ pub unsafe extern "C" fn memcpy(
     destination
 }
 
-/// Fills arbitrary memory with the same byte value.
+/// Fills a block of memory with the same byte value.
 ///
 /// This function uses the **C calling convention**, as the linker doesn't
 /// understand the Rust convention and expects the four core memory symbols

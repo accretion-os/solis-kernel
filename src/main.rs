@@ -2,14 +2,12 @@
 #![no_std]
 #![no_main]
 
-// Kernel utility functions
+/// Kernel utility functions.
 pub mod kernel;
 
-// Limine bindings
 /// Bindings from C for the Limine bootloader.
 pub mod limine;
 
-// Core memory functions
 /// The four critical memory functions `memcpy`, `memset`, `memmove`, and `memcmp`.
 pub mod memory;
 
