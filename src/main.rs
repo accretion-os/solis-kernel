@@ -41,3 +41,15 @@ limine_req_start! { static LIMINE_REQUESTS_START_MARKER: [u64; 4] = [
 limine_req_end! {
     static LIMINE_REQUESTS_END_MARKER: [u64; 2] = [0xadc0e0531bb10d03, 0x9572709f31764c62];
 }
+
+// Handles panics
+#[panic_handler]
+fn panic(_panic_info: &core::panic::PanicInfo) -> ! {
+    loop {}
+}
+
+// Kernel entrypoint
+#[unsafe(no_mangle)]
+pub extern "C" fn solis_entry() -> ! {
+    loop {}
+}
