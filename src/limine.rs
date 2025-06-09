@@ -44,32 +44,53 @@ pub struct FramebufferRequest {
 // this trait isn't implemented)
 unsafe impl Sync for FramebufferRequest {}
 
-/// Mark an item as a request to Limine.
+/// Set which base revision of Limine the kernel uses.
 #[macro_export]
-macro_rules! limine_request {
-    ($item:item) => {
-        #[used]
-        #[unsafe(link_section = ".limine_requests")]
-        $item
+macro_rules! limine_base_revision {
+    ($number:literal) => {
+        static LIMINE_BASE_REVISION: [u64; 3] = [0xf9562b2d5c95a6c8, 0x6a7b384944536bdc, $number];
     };
 }
 
-/// Mark an item to be the start marker for the Limine requests section.
+/// Create a framebuffer request to Limine.
+#[macro_export]
+macro_rules! limine_framebuffer_request {
+    () => {
+        static FRAMEBUFFER_REQUEST: crate::limine::FramebufferRequest =
+            crate::limine::FramebufferRequest {
+                id: [
+                    0xc7b1dd30df4c8b88,
+                    0x0a82e883a194f07b,
+                    0x9d5827dcd881dd75,
+                    0xa3148604f6fab11b,
+                ],
+                revision: 0,
+                response: core::ptr::null_mut(),
+            };
+    };
+}
+
+/// Place the start marker for the Limine requests section.
 #[macro_export]
 macro_rules! limine_req_start {
-    ($item:item) => {
+    () => {
         #[used]
         #[unsafe(link_section = ".limine_requests_start")]
-        $item
+        static LIMINE_REQUESTS_START_MARKER: [u64; 4] = [
+            0xf6b8f4b39de7d1ae,
+            0xfab91a6940fcb9cf,
+            0x785c6ed015d3e316,
+            0x181e920a7852b9d9,
+        ];
     };
 }
 
-/// Mark an item to be the end marker for the Limine requests section.
+/// Place the end marker for the Limine requests section.
 #[macro_export]
 macro_rules! limine_req_end {
-    ($item:item) => {
+    () => {
         #[used]
         #[unsafe(link_section = ".limine_requests_end")]
-        $item
+        static LIMINE_REQUESTS_END_MARKER: [u64; 2] = [0xadc0e0531bb10d03, 0x9572709f31764c62];
     };
 }
