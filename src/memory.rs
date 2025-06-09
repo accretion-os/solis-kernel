@@ -182,4 +182,61 @@ pub extern "C" fn memmove(
     destination
 }
 
-// TODO: Implement memcmp
+/// Compares two blocks of memory byte-by-byte.
+///
+/// This function uses the **C calling convention**, as the linker doesn't
+/// understand the Rust convention and expects the four core memory symbols
+/// (like `memcpy`) to use the C ABI.
+///
+/// # Parameters
+/// | Solis memory API name | Traditional libc name | Description                                                                        |
+/// | :-------------------: | :-------------------: | :--------------------------------------------------------------------------------: |
+/// | `block1`              | `s1`                  | A constant pointer to the start of the first block to be compared.                 |
+/// | `block2`              | `s2`                  | A constant pointer to the start of the second block to be compared.                |
+/// | `bytes_past`          | `n`                   | How many bytes past the starts to compare. (Including the value on the addresses.) |
+///
+/// # Returns
+/// A negative value if the first differing byte in `block1` is less than in `block2`.
+/// Zero if the blocks are equal.
+/// A positive value if the first differing byte in `block1` is greater than in `block2`.
+///
+/// # Safety
+/// This function exhibits the following behaviors that can be considered/is unsafe:
+/// - Disables name mangling.
+/// - Dereferences raw pointers.
+///     - Reads arbitrary memory.
+///
+/// To ensure safety, check the following:
+/// - The given first block address is valid (ergo non-null).
+/// - The given second block address is valid (ergo non-null).
+/// - The amount of bytes to compare doesn't exceed the valid memory.
+///
+/// ## Possible faults
+/// **This list is (likely) non-exhaustive. Always exercise caution with unsafe code.**
+/// - *Null pointer dereferencing*: If one or both block addresses are null,
+/// then undefined behavior will occur.
+/// - *Out-of-bounds memory access*: If the valid memory in bytes minus the
+/// amount of bytes to compare is less than or equal to 0, memory corruption or
+/// a crash will occur.
+#[unsafe(no_mangle)]
+pub extern "C" fn memcmp(
+    block1: *const ffi::c_void,
+    block2: *const ffi::c_void,
+    bytes_past: usize,
+) -> ffi::c_int {
+    let one = block1 as *const u8;
+    let two = block2 as *const u8;
+
+    for index in 0..bytes_past {
+        unsafe {
+            let comp1 = *one.add(index);
+            let comp2 = *two.add(index);
+        }
+
+        if comp1 != comp2 {
+            return if comp1 < comp2 { -1 } else { 1 };
+        }
+    }
+
+    0
+}
