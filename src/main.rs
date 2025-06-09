@@ -30,12 +30,12 @@ fn panic(_panic_info: &core::panic::PanicInfo) -> ! {
 // Kernel entrypoint
 #[unsafe(no_mangle)]
 pub extern "C" fn ignis_entry() -> ! {
-    // Kill the CPU if the base revision is not supported
+    // Halt the CPU if the base revision is not supported
     if limine_base_revision_supported!() == false {
         halt_cpu!()
     }
 
-    // Ensure a framebuffer is available
+    // Ensure a framebuffer is available, else halt the CPU
     if FRAMEBUFFER_REQUEST.response.is_null() || FRAMEBUFFER_REQUEST.response.framebuffer_count < 1
     {
         halt_cpu!()
