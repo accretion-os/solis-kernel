@@ -48,6 +48,6 @@ fn panic(_panic_info: &core::panic::PanicInfo) -> ! {
 
 // Kernel entrypoint
 #[unsafe(no_mangle)]
-pub extern "C" fn solis_entry() -> ! {
+pub extern "C" fn ignis_entry() -> ! {
     loop {}
 }

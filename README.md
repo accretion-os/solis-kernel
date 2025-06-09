@@ -1,11 +1,10 @@
-# Solis kernel
-> The Solis kernel for Accretion.
+# Ignis kernel
+> The kernel for the Vesper operating system.
 
 ## Synopsis
-The kernel for the Accretion operating system.
-The name was branch-derived from "space" > "Solar system" > "solar" > "Solis".
+The kernel for the Vesper operating system.
+The name is Latin for "fire".
 
 ## Component
-* Bundle identifier: `Solis-Accretion-v*.*.*`.
-  * Name: Solis
-  * Developer: Accretion
+Handles the core functionality of the Vesper operating system.
+* Bundle identifier: `Ignis-Vesper-v*.*.*`.

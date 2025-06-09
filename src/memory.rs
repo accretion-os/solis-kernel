@@ -9,7 +9,7 @@ use core::ffi;
 /// (like `memcpy`, this function) to use the C ABI.
 ///
 /// # Parameters
-/// | Solis memory API name | Traditional libc name | Description                                                   |
+/// | Ignis memory API name | Traditional libc name | Description                                                   |
 /// | :-------------------: | :-------------------: | :-----------------------------------------------------------: |
 /// | `destination`         | `dest`                | A mutable pointer to the start of the memory to be copied to. |
 /// | `source`              | `src`                 | A constant pointer to the source start address.               |
@@ -68,7 +68,7 @@ pub unsafe extern "C" fn memcpy(
 /// (like `memcpy`) to use the C ABI.
 ///
 /// # Parameters
-/// | Solis memory API name | Traditional libc name | Description                                                   |
+/// | Ignis memory API name | Traditional libc name | Description                                                   |
 /// | :-------------------: | :-------------------: | :-----------------------------------------------------------: |
 /// | `destination`         | `s`                   | A mutable pointer to the start of the memory to be copied to. |
 /// | `source_byte`         | `c`                   | An integer (which will be cast to the byte).                  |
@@ -125,7 +125,7 @@ pub unsafe extern "C" fn memset(
 /// (like `memcpy`) to use the C ABI.
 ///
 /// # Parameters
-/// | Solis memory API name | Traditional libc name | Description                                                |
+/// | Ignis memory API name | Traditional libc name | Description                                                |
 /// | :-------------------: | :-------------------: | :--------------------------------------------------------: |
 /// | `destination`         | `dest`                | A mutable pointer to the start of the memory to be filled. |
 /// | `source`              | `src`                 | The byte (a C integer, will be cast) to fill with.         |
@@ -189,7 +189,7 @@ pub extern "C" fn memmove(
 /// (like `memcpy`) to use the C ABI.
 ///
 /// # Parameters
-/// | Solis memory API name | Traditional libc name | Description                                                                        |
+/// | Ignis memory API name | Traditional libc name | Description                                                                        |
 /// | :-------------------: | :-------------------: | :--------------------------------------------------------------------------------: |
 /// | `block1`              | `s1`                  | A constant pointer to the start of the first block to be compared.                 |
 /// | `block2`              | `s2`                  | A constant pointer to the start of the second block to be compared.                |
