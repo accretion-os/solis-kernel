@@ -52,6 +52,13 @@ macro_rules! limine_base_revision {
     };
 }
 
+#[macro_export]
+macro_rules! limine_base_revision_supported {
+    () => {
+        LIMINE_BASE_REVISION[2] == 0
+    };
+}
+
 /// Create a framebuffer request to Limine.
 #[macro_export]
 macro_rules! limine_framebuffer_request {
