@@ -24,7 +24,7 @@ limine_req_end!();
 // Handles panics
 #[panic_handler]
 fn panic(_panic_info: &core::panic::PanicInfo) -> ! {
-    loop {}
+    halt_cpu!();
 }
 
 // Kernel entrypoint
@@ -53,5 +53,5 @@ pub extern "C" fn ignis_entry() -> ! {
     }
 
     // Hang the CPU
-    loop {}
+    halt_cpu!();
 }
