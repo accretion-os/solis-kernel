@@ -41,6 +41,17 @@ pub extern "C" fn ignis_entry() -> ! {
         halt_cpu!()
     }
 
+    // Grab the first framebuffer
+    let framebuffer: *mut limine::Framebuffer = FRAMEBUFFER_REQUEST.response.framebuffers[0];
+
+    // Paint a line on the screen
+    for i in 0..100 {
+        let fb_ptr = framebuffer.address as *mut u32;
+        unsafe {
+            *fb_ptr.add(i * (framebuffer.pitch as usize / 4) + i) = 0x00ffffff;
+        }
+    }
+
     // Hang the CPU
     loop {}
 }
