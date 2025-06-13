@@ -1,9 +1,7 @@
 OUTPUT_FORMAT(elf64-x86-64)
 ENTRY(ignis_entry)
 
-/* Define the program headers we want so the bootloader gives us the right */
-/* MMU permissions; this also allows us to exert more control over the linking */
-/* process. */
+/* Define headers to get the right MMU permissions and secure more linking process control */
 PHDRS
 {
     limine_requests PT_LOAD;
@@ -14,50 +12,43 @@ PHDRS
 
 SECTIONS
 {
-    /* We want to be placed in the topmost 2GiB of the address space, for optimisations */
-    /* and because that is what the Limine spec mandates. */
-    /* Any address in this region will do, but often 0xffffffff80000000 is chosen as */
-    /* that is the beginning of the region. */
+    /* Load the kernel in the topmost 2GiB of the address space */
+    /* Required by the Limine specification and for optimizations */
     . = 0xffffffff80000000;
 
-    /* Define a section to contain the Limine requests and assign it to its own PHDR */
+    /* Define the Limine requests container header */
     .limine_requests : {
         KEEP(*(.limine_requests_start))
         KEEP(*(.limine_requests))
         KEEP(*(.limine_requests_end))
     } :limine_requests
 
-    /* Move to the next memory page for .text */
+    /* Place the .text section in its own memory page */
     . = ALIGN(CONSTANT(MAXPAGESIZE));
-
     .text : {
         *(.text .text.*)
     } :text
 
-    /* Move to the next memory page for .rodata */
+    /* Place the .rodata section in its own memory page */
     . = ALIGN(CONSTANT(MAXPAGESIZE));
-
     .rodata : {
         *(.rodata .rodata.*)
     } :rodata
 
-    /* Move to the next memory page for .data */
+    /* Place the .data section in its own memory page */
     . = ALIGN(CONSTANT(MAXPAGESIZE));
-
     .data : {
         *(.data .data.*)
     } :data
 
-    /* NOTE: .bss needs to be the last thing mapped to :data, otherwise lots of */
-    /* unnecessary zeros will be written to the binary. */
-    /* If you need, for example, .init_array and .fini_array, those should be placed */
-    /* above this. */
+    /* !!! .bss needs to be the last thing mapped to the :data header */
+    /* If it's not, the linker will pad the binary with extra zeros */
     .bss : {
         *(.bss .bss.*)
         *(COMMON)
     } :data
 
-    /* Discard .note.* and .eh_frame* since they may cause issues on some hosts. */
+    /* Discard .eh_frame* and .note.* to eliminate related issues on some hardware */
     /DISCARD/ : {
         *(.eh_frame*)
         *(.note .note.*)
