@@ -8,9 +8,6 @@ pub mod kernel;
 /// Bindings from C for the Limine bootloader.
 pub mod limine;
 
-/// The four critical memory functions `memcpy`, `memset`, `memmove`, and `memcmp`.
-pub mod memory;
-
 // Set which base revision of Limine the kernel uses, currently 3
 limine_base_revision!(3);
 
