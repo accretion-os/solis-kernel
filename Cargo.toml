@@ -4,6 +4,7 @@ description = "The kernel for the Sigil operating system"
 authors = ["Sigil development team"]
 version = "0.1.0"
 edition = "2024"
+build = "build/script.rs"
 
 [profile.dev]
 panic = "abort"
