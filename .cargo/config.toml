@@ -1,5 +1,5 @@
 [build]
-target = "x86_64-sigil.json"
+target = ".cargo/x86_64-sigil.json"
 
 [unstable]
 build-std-features = ["compiler-builtins-mem"]
