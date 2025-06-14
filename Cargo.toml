@@ -6,6 +6,10 @@ version = "0.1.0"
 edition = "2024"
 build = "build/script.rs"
 
+[[bin]]
+path = "src/main.rs"
+name = "ignis.skn"
+
 [profile.dev]
 panic = "abort"
 
