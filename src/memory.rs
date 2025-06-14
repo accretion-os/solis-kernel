@@ -231,10 +231,10 @@ pub extern "C" fn memcmp(
         unsafe {
             let comp1 = *one.add(index);
             let comp2 = *two.add(index);
-        }
 
-        if comp1 != comp2 {
-            return if comp1 < comp2 { -1 } else { 1 };
+            if comp1 != comp2 {
+                return if comp1 < comp2 { -1 } else { 1 };
+            }
         }
     }
 

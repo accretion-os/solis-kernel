@@ -30,28 +30,23 @@ fn panic(_panic_info: &core::panic::PanicInfo) -> ! {
 // Kernel entrypoint
 #[unsafe(no_mangle)]
 pub extern "C" fn ignis_entry() -> ! {
-    // Halt the CPU if the base revision is not supported
-    if limine_base_revision_supported!() == false {
-        halt_cpu!()
+    if !limine_base_revision_supported!() {
+        halt_cpu!();
     }
 
-    // Ensure a framebuffer is available, else halt the CPU
-    if FRAMEBUFFER_REQUEST.response.is_null() || FRAMEBUFFER_REQUEST.response.framebuffer_count < 1
-    {
-        halt_cpu!()
-    }
+    unsafe {
+        let response = FRAMEBUFFER_REQUEST.response;
+        if response.is_null() || (*response).framebuffer_count < 1 {
+            nested_halt_cpu!();
+        }
 
-    // Grab the first framebuffer
-    let framebuffer: *mut limine::Framebuffer = FRAMEBUFFER_REQUEST.response.framebuffers[0];
+        let fb = (*(*response).framebuffers).add(0);
+        let fb_ptr = (*fb).address as *mut u32;
 
-    // Paint a line on the screen
-    for i in 0..100 {
-        let fb_ptr = framebuffer.address as *mut u32;
-        unsafe {
-            *fb_ptr.add(i * (framebuffer.pitch as usize / 4) + i) = 0x00ffffff;
+        for i in 0..100 {
+            *fb_ptr.add(i * ((*fb).pitch as usize / 4) + i) = 0x00ffffff;
         }
     }
 
-    // Hang the CPU
     halt_cpu!();
 }
